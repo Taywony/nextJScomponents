@@ -1,6 +1,24 @@
+import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
+
+const priceVariants = cva('', {
+  variants: {
+    variant: {
+      origin: 'font-bold text-3xl line-through',
+      discount: 'font-bold text-4xl',
+    },
+  },
+
+  defaultVariants: {
+    variant: 'discount',
+  },
+});
+
+export interface PriceProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof priceVariants> {}
 
 const PriceBox = React.forwardRef<
   HTMLDivElement,
@@ -10,12 +28,8 @@ const PriceBox = React.forwardRef<
 ));
 PriceBox.displayName = 'PriceBox';
 
-const PriceMonthly = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p ref={ref} className={cn('font-bold text-4xl', className)} {...props} />
-));
-PriceMonthly.displayName = 'PriceMonthly';
+const PriceMonthly = ({ className, variant, ...props }: PriceProps) => {
+  return <p className={cn(priceVariants({ variant }), className)} {...props} />;
+};
 
 export { PriceBox, PriceMonthly };

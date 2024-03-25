@@ -20,9 +20,10 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center gap-4 p-24">
       <section className="container grid grid-cols-2 gap-4">
         {pricingPlans.map((plan) => {
-          console.log(plan);
           return (
-            <Card key={plan.id}>
+            <Card
+              key={plan.id}
+              className={`${plan.planType === 'custom' && 'bg-amber-50'}`}>
               <CardHeader>
                 <CardTitle>{plan.planName}</CardTitle>
                 <BadgeBox>
@@ -33,10 +34,23 @@ export default async function Home() {
               </CardHeader>
               <CardContent>
                 <PriceBox>
-                  <PriceMonthly>${plan.monthlyDiscountedPrice}</PriceMonthly>
+                  {plan.planType === 'custom' && (
+                    <PriceMonthly variant="origin">
+                      ${plan.monthlyOriginalPrice}
+                    </PriceMonthly>
+                  )}
+                  <PriceMonthly>
+                    $
+                    {plan.planType === 'custom'
+                      ? plan.monthlyDiscountedPrice
+                      : plan.monthlyOriginalPrice}
+                  </PriceMonthly>
                   <span className="h-auto">/mo</span>
                 </PriceBox>
-                <Button>Get Started With {plan.planName}</Button>
+                <Button
+                  variant={`${plan.planType === 'custom' ? 'secondary' : 'default'}`}>
+                  Get Started With {plan.planName}
+                </Button>
                 <Separator></Separator>
               </CardContent>
               <CardFooter>
