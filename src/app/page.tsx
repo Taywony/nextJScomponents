@@ -26,7 +26,8 @@ export default async function Home() {
               className={`${plan.planType === 'custom' && 'bg-amber-50'}`}>
               <CardHeader>
                 <CardTitle>{plan.planName}</CardTitle>
-                <BadgeBox>
+                <BadgeBox
+                  className={`${plan.planType === 'custom' && 'hidden'}`}>
                   {plan.isPopular && <Badge>popular</Badge>}
                   {plan.isRecommended && <Badge>recommended</Badge>}
                   {plan.isBestValue && <Badge>best value</Badge>}
@@ -61,6 +62,16 @@ export default async function Home() {
                     </CardDescription>
                   );
                 })}
+                {plan.planType === 'custom' &&
+                  plan.customFeatures.map((feature) => {
+                    return (
+                      <CardDescription
+                        key={plan.features.indexOf(feature)}
+                        className="text-red-500">
+                        &#183; {feature}
+                      </CardDescription>
+                    );
+                  })}
               </CardFooter>
             </Card>
           );
