@@ -1,3 +1,5 @@
+import { Badge } from '@/components/ui/badge';
+import { BadgeBox } from '@/components/ui/badge-box';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { PriceBox, PriceMonthly } from '@/components/ui/price';
 import { Separator } from '@/components/ui/separator';
 import { getPricingPlans } from '@/lib/get-pricing-plans';
 
@@ -17,16 +20,22 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center gap-4 p-24">
       <section className="container grid grid-cols-2 gap-4">
         {pricingPlans.map((plan) => {
+          console.log(plan);
           return (
             <Card key={plan.id}>
-              <CardTitle>{plan.planName}</CardTitle>
+              <CardHeader>
+                <CardTitle>{plan.planName}</CardTitle>
+                <BadgeBox>
+                  {plan.isPopular && <Badge>popular</Badge>}
+                  {plan.isRecommended && <Badge>recommended</Badge>}
+                  {plan.isBestValue && <Badge>best value</Badge>}
+                </BadgeBox>
+              </CardHeader>
               <CardContent>
-                <CardHeader>
-                  <p className="font-bold text-4xl">
-                    ${plan.monthlyOriginalPrice}
-                  </p>
-                  <p className="h-auto">/mo</p>
-                </CardHeader>
+                <PriceBox>
+                  <PriceMonthly>${plan.monthlyDiscountedPrice}</PriceMonthly>
+                  <span className="h-auto">/mo</span>
+                </PriceBox>
                 <Button>Get Started With {plan.planName}</Button>
                 <Separator></Separator>
               </CardContent>
