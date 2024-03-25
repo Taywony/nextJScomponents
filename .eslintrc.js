@@ -28,13 +28,11 @@ const config = {
     'unused-imports/no-unused-vars': [
       'warn',
       {
-        'vars': 'all',
+        vars: 'all',
 
-
-
-            'varsIgnorePattern': '^_',
-        'args': 'after-used',
-        'argsIgnorePattern': '^_',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
       },
     ],
     '@typescript-eslint/array-type': 'off',
